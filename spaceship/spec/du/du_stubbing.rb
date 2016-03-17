@@ -85,7 +85,7 @@ def du_upload_large_image_success
     with(body: "binary image...",
            headers: { 'Accept' => 'application/json, text/plain, */*', 'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Connection' => 'keep-alive', 'Content-Length' => '520', 'Content-Type' => 'image/jpeg', 'Referrer' => 'https://itunesconnect.apple.com/WebObjects/iTunesConnect.woa/ra/ng/app/898536088',
                      'X-Apple-Jingle-Correlation-Key' => 'iOS App:AdamId=898536088:Version=0.9.13', 'X-Apple-Upload-Appleid' => '898536088', 'X-Apple-Upload-Contentproviderid' => '1234567', 'X-Apple-Upload-Itctoken' => 'sso token for image',
-                     'X-Apple-Upload-Referrer' => 'https://itunesconnect.apple.com/WebObjects/iTunesConnect.woa/ra/ng/app/898536088', 'X-Apple-Upload-Validation-Rulesets' => 'MZPFT.LargeApplicationIcon', 'X-Original-Filename' => 'icon1024.jpg' }).
+                     'X-Apple-Upload-Referrer' => 'https://itunesconnect.apple.com/WebObjects/iTunesConnect.woa/ra/ng/app/898536088', 'X-Apple-Upload-Validation-Rulesets' => 'MZPFT.LargeApplicationIcon', 'X-Original-Filename' => 'ftl_FAKEMD5_icon1024.jpg' }).
     to_return(status: 201, body: du_read_fixture_file('upload_image_success.json'), headers: { 'Content-Type' => 'application/json' })
 end
 
