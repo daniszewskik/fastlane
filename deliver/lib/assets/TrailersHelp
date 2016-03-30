@@ -1,0 +1,10 @@
+Put all trailers you want to use inside a folder given by trailers_path.
+There are no language versions of trailers for this moment. Uploaded trailers will be propagated on all languages.
+Keep in mind that you can upload only one trailer per device.
+Unlinke screenshots, device type won't be automatically recognized, so be sure to prefix trailer and trailer poster image with
+proper device name, eg. ipad_filename.mov, iphone4_filename.jpg
+
+** feature for the future ( ffmpeg not supported for now - passing poster image is required) **
+If you pass timestamp in filename in format xxxx it will be used to extract frame from video and use it as poster image,
+eg. ipad_0638_filename.mp4 will extract frame at 06,38sec of the trailer.
+

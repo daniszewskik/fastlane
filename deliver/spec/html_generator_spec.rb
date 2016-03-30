@@ -6,6 +6,7 @@ describe Deliver::HtmlGenerator do
 
   describe :render do
     let(:screenshots) { [] }
+    let(:trailers) { [] }
 
     context 'minimal configuration' do
       let(:options) do
@@ -16,7 +17,7 @@ describe Deliver::HtmlGenerator do
       end
 
       it 'renders HTML' do
-        expect(render(options, screenshots)).to match(/<html>/)
+        expect(render(options, screenshots, trailers)).to match(/<html>/)
       end
     end
 
@@ -30,7 +31,7 @@ describe Deliver::HtmlGenerator do
       end
 
       it 'renders HTML' do
-        capture = render(options, screenshots)
+        capture = render(options, screenshots, trailers)
         expect(capture).to match(/<html>/)
         expect(capture).to include('<li>Some</li>')
         expect(capture).to include('<li>key</li>')
@@ -40,9 +41,9 @@ describe Deliver::HtmlGenerator do
 
     private
 
-    def render(options, screenshots)
+    def render(options, screenshots, trailers)
       Dir.mktmpdir do |dir|
-        path = generator.render(options, screenshots, dir)
+        path = generator.render(options, screenshots, trailers, dir)
         return File.read(path)
       end
     end

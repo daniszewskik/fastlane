@@ -48,15 +48,17 @@ module Deliver
     def upload_metadata
       # First, collect all the things for the HTML Report
       screenshots = UploadScreenshots.new.collect_screenshots(options)
+      trailers = UploadTrailers.new.collect_trailers(options)
       UploadMetadata.new.load_from_filesystem(options)
       UploadMetadata.new.assign_defaults(options)
 
       # Validate
-      validate_html(screenshots)
+      validate_html(screenshots, trailers)
 
       # Commit
       UploadMetadata.new.upload(options)
       UploadScreenshots.new.upload(options, screenshots)
+      UploadTrailers.new.upload(options, trailers)
       UploadPriceTier.new.upload(options)
       UploadAssets.new.upload(options) # e.g. app icon
     end
@@ -89,10 +91,10 @@ module Deliver
 
     private
 
-    def validate_html(screenshots)
+    def validate_html(screenshots, trailers)
       return if options[:force]
-      return if options[:skip_metadata] && options[:skip_screenshots]
-      HtmlGenerator.new.run(options, screenshots)
+      return if options[:skip_metadata] && options[:skip_screenshots] && options[:skip_trailers]
+      HtmlGenerator.new.run(options, screenshots, trailers)
     end
   end
 end

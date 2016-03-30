@@ -26,12 +26,25 @@ class EditVersion
     @ret ||= init_screenshots
   end
 
+  def trailers
+    @trailers ||= init_trailer
+  end
+
   # we don't have to really upload. It's enoguth to know if we are uploading or deleting
   def upload_screenshot!(path, order, lang, device)
     if path
       puts "Uploading '#{path}' for device #{device}"
     else
       puts "Deleting #{order} for device #{device}"
+    end
+  end
+
+  # the same as with screenshot - real upload is tested in spaceship module
+  def upload_trailer!(path, language, device_type, timestamp, poster_image_path = nil)
+    if path
+      puts "Uploading '#{path}' for device #{device_type}"
+    else
+      puts "Deleting trailer for device #{device_type}"
     end
   end
 
@@ -51,5 +64,13 @@ class EditVersion
       @ret['en-US'] << file
     end
     @ret
+  end
+
+  def init_trailer
+    @trailer = {}
+    @trailer['en-US'] ||= []
+    video = Deliver::AppTrailer.new('ipad_path_to_trailer.mov', 'en-US')
+    @trailer['en-US'] << video
+    @trailer
   end
 end

@@ -5,9 +5,9 @@ module Deliver
     # * separated by newlines
     KEYWORD_SPLITTER = /(?:,\s?|\r?\n)/
 
-    def run(options, screenshots)
+    def run(options, screenshots, trailers)
       begin
-        html_path = self.render(options, screenshots, '.')
+        html_path = self.render(options, screenshots, trailers, '.')
       rescue => ex
         UI.error(ex.inspect)
         UI.error(ex.backtrace.join("\n"))
@@ -30,10 +30,11 @@ module Deliver
 
     # Renders all data available to quickly see if everything was correctly generated.
     # @param export_path (String) The path to a folder where the resulting HTML file should be stored.
-    def render(options, screenshots, export_path = nil)
+    def render(options, screenshots, trailers, export_path = nil)
       lib_path = Helper.gem_path('deliver')
 
       @screenshots = screenshots || []
+      @trailers = trailers || []
       @options = options
 
       @app_name = (options[:name]['en-US'] || options[:name].values.first) if options[:name]

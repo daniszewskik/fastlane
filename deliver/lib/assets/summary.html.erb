@@ -103,6 +103,10 @@
               margin-right: 10px;
           }
 
+          .app-trailer {
+            width: 30%;
+          }
+
           #app-screenshots .cat-headline {
               margin-left: 10px;
               margin-right: 10px;
@@ -111,6 +115,39 @@
     </head>
     
     <body>
+
+      <!-- Since trailers are shared between languages, let's display them first -->
+
+      <div class="app-name">App trailers</div>
+      <% if @options[:skip_trailers] %>
+        <div class="app-screenshots">
+          <h2 style="color: blue">Skipped Trailers</h2>
+          <p>
+            Options to skip_trailers activated. <i>deliver</i> will not modify your app trailers.
+          </p>
+        </div>
+      <% elsif @trailers.count > 0 %>
+        <div class="app-screenshots">
+          <% @trailers.each do |trailer| %>
+            <h4><%= trailer.formatted_name %></h4>
+            <video class="app-trailer" controls poster="<%= trailer.poster_image_path %>">
+              <source src="<%= trailer.video_path %>" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          <% end %>
+        </div>
+      <% else %>
+        <div class="app-screenshots">
+          <h2 style="color: red">No Trailers Found</h2>
+          <p>
+            deliver couldn't find any trailers. This will <b>remove</b> existing trailers, but will also not upload any.
+          </p>
+          <p>
+            Please make sure to store your trailers in the <i>trailers</i> folder.
+          </p>
+        </div>
+      <% end %>
+
       <% @languages.each do |language| %>
         <% if @options[:name] %>
           <div class="app-name">
