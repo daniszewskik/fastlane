@@ -98,5 +98,19 @@ describe Deliver::UploadScreenshots do
         deliver.upload(options, mock_local_upload([1, 2, 3, 4]))
       end.to output('').to_stdout
     end
+
+    it "should raise error when no path to file given" do
+      FakeFS.deactivate!
+      expect do
+        Spaceship::UploadFile.construct_upload_filename('', 'FAKEMD5')
+      end.to raise_error
+    end
+
+    it "should raise error when no md5 to file given" do
+      file_path = File.join(@root, "scr_5.jpg")
+      expect do
+        Spaceship::UploadFile.construct_upload_filename(file_path, '')
+      end.to raise_error
+    end
   end
 end

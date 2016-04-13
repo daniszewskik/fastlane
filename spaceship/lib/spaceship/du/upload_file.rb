@@ -11,16 +11,17 @@ module Spaceship
 
     class << self
       def from_path(path)
-        raise "Image must exists at path: #{path}" unless File.exist?(path)
+        raise "Image must exist at path: #{path}" unless File.exist?(path)
 
         # md5 from original. keeping track of md5s allows to skip previously uploaded in deliver
         content_md5 = Spaceship::Utilities.md5digest(path)
         path = remove_alpha_channel(path) if File.extname(path).casecmp('.png').zero?
 
         content_type = Utilities.content_type(path)
+
         self.new(
           file_path: path,
-          file_name: construct_upload_filename(content_md5, path),
+          file_name: construct_upload_filename(path, content_md5),
           file_size: File.size(path),
           content_type: content_type,
           bytes: File.read(path)
@@ -39,11 +40,13 @@ module Spaceship
       end
 
       # Construct proper filename for upload file, containing md5 hash of the file's content and it's original filename
-      # @param md5 (String) md5 of files content
       # @param path (String) path to a file
+      # @param md5 (String) md5 of files content
       # @return (String)
-      def construct_upload_filename(md5, path)
-        'ftl_' + md5 + '_' + File.basename(path)
+      def construct_upload_filename(path, md5)
+        raise "Image must exist at path: #{path}" unless File.exist?(path)
+        raise "No md5 checksum for image at path #{path}" if md5.nil? || md5.empty?
+        return 'ftl_' + md5 + '_' + File.basename(path)
       end
 
       # Checks if original file name contains md5 of file's content, and returns hash containing md5 and original file name

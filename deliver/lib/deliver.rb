@@ -13,6 +13,7 @@ require 'deliver/app_screenshot'
 require 'deliver/html_generator'
 require 'deliver/generate_summary'
 require 'deliver/loader'
+require 'deliver/screenshot_md5s'
 
 require 'spaceship'
 require 'fastlane_core'
